@@ -1,12 +1,13 @@
-<div class="modal fade" id="modal-loading" ng-controller="LoadCtrl as loader">
+<div class="modal fade" id="modal-loading">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
 
-                <h4 class="text-center">{{loader.status}}</h4>
+                <h4 ng-hide="loader.errorMessage" class="text-center">{{loader.status}}</h4>
+                <p class="text-center" ng-show="loader.errorMessage"><span class="label label-danger">{{loader.errorMessage}}</span></p>
 
                 <div class="progress progress-striped active">
-                    <div class="progress-bar" role="progressbar" style="{{loader.currentStep / loader.totalStep}}">
+                    <div class="progress-bar" role="progressbar" style="width: {{loader.getPercentage()}}%">
                     </div>
                     <i class="fa fa-cog fa-spin moving-icon"></i>
                 </div>

@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: zoomData', function () {
+describe('Service: Resources', function () {
 
   // load the service's module
   beforeEach(module('spriteAnimatorApp'));
 
   // instantiate service
-  var zoomData;
-  beforeEach(inject(function (_zoomData_) {
-      zoomData = _zoomData_;
+  var Resources;
+  beforeEach(inject(function (_Resources_) {
+    Resources = _Resources_;
   }));
 
   it('should do something', function () {
-    expect(!!zoomData).toBe(true);
+    expect(!!Resources).toBe(true);
   });
 
 });

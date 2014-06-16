@@ -1,7 +1,10 @@
 {
   "name": "spriteanimator",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-karma": "^0.8.3",
+    "karma": "^0.12.16"
+  },
   "devDependencies": {
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",
