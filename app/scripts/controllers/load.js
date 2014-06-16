@@ -19,7 +19,7 @@
      * Controller of the spriteAnimatorApp
      */
     angular.module('spriteAnimatorApp')
-        .controller('LoadCtrl', function ($scope, $location, resourceSrv) {
+        .controller('LoadCtrl', function ($scope, $location, $routeParams, resourceSrv) {
             if (_loaded) $location.path('/');
 
             var ctrl = this;
@@ -48,7 +48,7 @@
             this.start = function () {
                 $('#modal-loading').on('hidden.bs.modal', function () {
                     $scope.$apply(function () {
-                        $location.path('/');
+                        $location.search('redirect', null).path($routeParams.redirect);
                     });
                 }).modal('hide');
             };

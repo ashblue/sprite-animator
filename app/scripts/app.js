@@ -20,17 +20,20 @@ angular
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                templateUrl: 'views/main.html'
             })
             .when('/load', {
                 templateUrl: 'views/load.html',
                 controller: 'LoadCtrl',
                 controllerAs: 'loader'
             })
+            .when('/sprites', {
+                templateUrl: 'views/sprite-sheets.html'
+            })
             .otherwise({
                 redirectTo: '/'
             });
     }).run(function ($location) {
-        $location.path('/load');
+        var path = $location.path();
+        $location.path('/load').search('redirect', path);
     });

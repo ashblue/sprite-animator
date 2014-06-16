@@ -43,16 +43,14 @@
     </div>
 </nav>
 
+<!--[if lt IE 7]>
 <div class="container">
-
-    <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
         your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <div ng-view=""></div>
-
 </div>
+<![endif]-->
+
+<div ng-view=""></div>
 
 <div id="main-footer">
     <div class="container">
@@ -126,10 +124,10 @@
 
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
-<script src="scripts/controllers/about.js"></script>
 <script src="scripts/controllers/load.js"></script>
 <script src="scripts/controllers/header.js"></script>
 <script src="scripts/controllers/zoom.js"></script>
+<script src="scripts/controllers/images.js"></script>
 <script src="scripts/services/zoom.js"></script>
 <script src="scripts/services/collection.js"></script>
 <script src="scripts/services/resources.js"></script>
@@ -137,6 +135,8 @@
 <script src="scripts/services/resources/images.js"></script>
 <script src="scripts/services/resources/sprites.js"></script>
 <script src="scripts/services/resources/timelines.js"></script>
+<script src="scripts/directives/image-list.js"></script>
+<script src="scripts/filters/reverse.js"></script>
 <!-- endbuild -->
 </body>
 </html>
