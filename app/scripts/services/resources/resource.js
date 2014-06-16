@@ -149,9 +149,8 @@
 
             Resource.prototype.destroy = function (id) {
                 var item = this.get(id);
+                this.clean(item._id);
                 this._remove(item);
-
-                this.clean();
 
                 if (window.CONFIG.online) $http.delete(this.url.root + '/' + item._id);
 
@@ -161,7 +160,7 @@
             /**
              * Logic fired whenever an item is deleted from the database to cleanup id references
              */
-            Resource.prototype.clean = function () {};
+            Resource.prototype.clean = function (id) {};
 
             /**
              * Logic fired at initial load to verify data integrity

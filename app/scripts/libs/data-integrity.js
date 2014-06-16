@@ -1,12 +1,6 @@
 (function () {
     window.sa = window.sa || {};
-
-    var errors = false;
     window.sa.verify = {
-        errorMessage: function () {
-            if (errors) window.alert('Data integrity issues have destroyed existing animation data, please see the console and contact a system administrator before proceeding.');
-        },
-
         /**
          * Loops through collections to verify data integrity, if the primaryCol item is not found the refCol item is destroyed
          * @param primaryCol {Collection} The data we want to check for blank id references on
@@ -45,13 +39,9 @@
                     refCol.destroy(item._id);
                 });
 
-                console.error('The following ' + primaryCol.slug + ' are missing ' + JSON.stringify(missingData)
-                    + ' because of this the following ' + refCol.slug + ' have been destroyed ' + JSON.stringify(removedData));
-
-                errors = true;
+                return 'The following ' + primaryCol.slug + ' are missing ' + JSON.stringify(missingData)
+                    + ' because of this the following ' + refCol.slug + ' have been destroyed ' + JSON.stringify(removedData);
             }
-
-            return this;
         },
 
         /**
@@ -87,10 +77,8 @@
                 });
 
 
-                console.error('The following ' + primaryCol.slug + ' are missing ' + JSON.stringify(missingData)
-                    + ' because of this the following ' + refCol.slug + ' have been affected ' + JSON.stringify(affectedTimelines));
-
-                errors = true;
+                return 'The following ' + primaryCol.slug + ' are missing ' + JSON.stringify(missingData)
+                    + ' because of this the following ' + refCol.slug + ' have been affected ' + JSON.stringify(affectedTimelines);
             }
 
             return this;

@@ -4,8 +4,12 @@
     var MESSAGES = {
         populate: 'Equipping penguins with rocket launchers',
         integrity: 'Penguins are eliminating all corrupted data',
-        error: 'Pardon our penguins, something went wrong while loading data from the server. Refresh the page and try again please.'
+        complete: 'App is ready to launch',
+        error: 'Pardon our penguins, something went wrong while loading data from the server. Refresh the page and try again please.',
+        cleanup: 'App was loaded successfully, but some data couldn\'t be found (details below)'
     };
+
+    var _loaded = false; // Is the loader done loading?
 
     /**
      * @ngdoc function
@@ -16,6 +20,8 @@
      */
     angular.module('spriteAnimatorApp')
         .controller('LoadCtrl', function ($scope, $location, resourceSrv) {
+            if (_loaded) $location.path('/');
+
             var ctrl = this;
             this.currentStep = 0;
             this.totalSteps = resourceSrv.list.length * 2; // @TODO Calculate this total (totalFactories * 2)
@@ -50,6 +56,7 @@
             this.loadSuccess = function () {
                 this.currentStep += 1;
                 if (resourceSrv.list.length !== this.currentStep) return;
+                this.status = MESSAGES.integrity;
                 resourceSrv.list.forEach(function (resource) {
                     resource.verify(ctrl.verifySuccess.bind(ctrl), ctrl.verifyError.bind(ctrl));
                 });
@@ -57,9 +64,16 @@
 
             this.verifySuccess = function () {
                 this.currentStep += 1;
-
                 if (this.currentStep !== this.totalSteps) return;
-                if (!this.errors.length) this.start();
+
+                _loaded = true;
+
+                if (!this.errors.length) {
+                    this.status = MESSAGES.complete;
+                    this.start();
+                } else {
+                    this.status = MESSAGES.cleanup;
+                }
             };
 
             this.verifyError = function (message) {
@@ -72,6 +86,10 @@
 
             this.getPercentage = function () {
                 return Math.floor((this.currentStep / this.totalSteps) * 100);
+            };
+
+            this.isLoaded = function () {
+                return _loaded;
             };
 
             this.init();
