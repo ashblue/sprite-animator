@@ -3,6 +3,53 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/font
 @import "bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
 // endbower
 
+$highlight: #1178cc;
+$highlight-secondary: #e30482;
+
+#animation-manager {
+  position: relative;
+  z-index: 1;
+}
+
+#main-footer {
+  background: #333;
+  color: #fff;
+  padding-top: 20px;
+  margin-top: 60px;
+}
+
+#modal-loading {
+  .progress {
+    position: relative;
+    overflow: visible;
+  }
+
+  .moving-icon {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+  }
+
+}
+
+#dat-gui {
+  position: fixed;
+  right: 0;
+  top: 52px;
+  z-index: 20;
+
+  .dg {
+    input {
+      line-height: 100%;
+    }
+  }
+}
+
+.thumb-constrain {
+  max-width: 80px;
+  max-height: 30px;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -10,83 +57,526 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/font
   padding: 0.2em 0;
 }
 
-/* Space out content a bit */
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+.container {
+  max-width: 940px;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
+#slice-lines-container {
+  max-width: 100%;
+  position: relative;
+  margin-bottom: 10px;
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
+  img {
+    max-width: 100%;
+  }
 
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
+  .slice-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    outline: 1px solid #f00;
+    max-width: 100%;
   }
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+#scale-range {
+  margin: 20px 20px 0 20px;
+  width: 60px;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
-}
+#scale-value {
+  background: #333;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin: -5px 0 0 -30px;
+  padding: 3px;
+  border-radius: 3px;
+  display: none;
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+  &.active {
+    display: block;
   }
-}
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-
-  p + h4 {
-    margin-top: 28px;
+  &:after {
+    content: 'x'
   }
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
+#canvas-upload-preview {
+  canvas {
+    max-width: 100%;
+  }
+}
+
+.animation-sprite-sheet {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -100px;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+}
+
+#timeline {
+  $tick: 16px;
+  $tick-length: 500;
+  $tick-height: 30px;
+  $header-height: 26px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #333;
+  color: #fff;
+
+  scrub-duration {
+    display: block;
+    height: $header-height;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+
+    .length {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.7);
+      height: 2px;
+    }
+
+    scrub-duration-handle {
+      width: 5px;
+      height: 100%;
+      cursor: grab;
+      position: absolute;
+      top: 0;
+      right: 0;
+      opacity: 0.7;
+      pointer-events: auto;
+      background: #000;
+      border-radius: 10px;
+      margin-top: 3px;
+      border-right: 1px solid #fff;
+
+      &:hover {
+        opacity: 1;
+        background: $highlight;
+      }
+    }
   }
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
+  .resize-timeline {
+    height: 2px;
+    width: 100%;
+    background: #777;
+    cursor: row-resize;
+
+    &:hover {
+      background: $highlight;
+    }
   }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
+
+  .fa {
+    color: #999;
+    padding: 0 3px;
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+    }
   }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
+
+  .sidebar {
+    width: 240px;
+    position: absolute;
+
+    .timeline-header {
+      padding: 5px 5px 0 10px;
+      height: $header-height;
+
+      span {
+        margin-right: 5px;
+        color: #777;
+        cursor: pointer;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .main {
+    margin-left: 240px;
+    min-height: 100px;
+    overflow: scroll;
+    position: relative;
+
+    .timeline-guide, scrub {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+
+      .box {
+        z-index: 1;
+        display: block;
+        cursor: -webkit-grab;
+        cursor: grab;
+        width: $tick - 2px;
+        height: 24px;
+        border: 1px solid #b20000;
+        margin-left: 1px;
+        background: rgba(255, 0, 0, 0.3);
+        margin-top: 2px;
+      }
+
+      .tail {
+        background: #b20000;
+        display: block;
+        width: 1px;
+        height: 100%;
+        margin-left: 8px;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      background: #222;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #777;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: #222;
+    }
+
+    .timeline-header {
+      display: block;
+      cursor: pointer;
+      height: $header-height;
+      //      min-width: 3000px;
+      min-width: $tick-length * ($tick - 1);
+    }
+  }
+
+  .timeline-header {
+    background: #444;
+    color: #bbb;
+    position: relative;
+
+    .tick-number {
+      display: block;
+      width: ($tick - 1) * 5;
+      text-align: right;
+      float: left;
+      font-size: 10px;
+      margin-top: 7px;
+
+      &:nth-child(2) {
+        margin-left: 13px;
+      }
+
+      &.start {
+        position: absolute;
+        left: 0;
+        text-align: left;
+      }
+    }
+
+    .tick-contain {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      .tick {
+        height: 4px;
+        width: $tick - 1px;
+        border-right: 1px solid #bbb;
+        display: block;
+        float: left;
+      }
+    }
+  }
+
+  .timeline-content {
+    .layer-timeline {
+      position: relative;
+      height: $tick-height;
+
+      .tick-fill {
+        position: absolute;
+        top: 0;
+        margin: 1px;
+        height: 28px;
+        border: 1px solid #222;
+        border-top: none;
+        border-left: none;
+        background: #393939;
+
+        &:hover {
+          background: $highlight;
+        }
+
+        &.active, &.active:hover {
+          background: #0af;
+        }
+      }
+
+      .tick-background {
+        position: absolute;
+        background: #555;
+        border-top: #656565;
+        width: $tick-length * ($tick - 1);
+        cursor: pointer;
+
+
+        .tick {
+          float: left;
+          display: block;
+          width: $tick - 2;
+          height: $tick-height - 2;
+          background: #494949;
+          margin: 1px 0 1px 1px;
+          border-right: #424242 1px solid;
+          border-bottom: #424242 1px solid;
+
+          &:hover {
+            background: #777;
+          }
+        }
+      }
+    }
+
+    .layer-details {
+      padding: 3px 10px;
+      height: $tick-height;
+      background: #555;
+      border-bottom: 1px solid #444;
+      position: relative;
+
+      &.active {
+        background: #20729b;
+      }
+
+      .protect-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .name {
+        background: transparent;
+        border: none;
+        width: 120px;
+        overflow: hidden;
+        display: inline-block;
+        white-space: nowrap;
+
+        &:hover {
+          outline: #777 1px solid;
+        }
+
+        &:focus {
+          background: #fff;
+          color: #000;
+          outline: none;
+        }
+      }
+
+      .group {
+        position: relative;
+        z-index: 1;
+      }
+    }
+  }
+
+  #timeline-toolbar {
+    position: relative;
+    border-top: #777 1px solid;
+    background: #444;
+    padding: 1px 10px;
+    display: block;
+    z-index: 1;
+
+    .group {
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #111;
+    }
+  }
+}
+
+.test-block {
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+
+.animation-stage {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  .animation-stage-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -50px 0 0 -50px;
+
+    .hitbox {
+      opacity: 0.3;
+      background: #f00;
+      outline: 1px dashed #333;
+      position: relative;
+      pointer-events: none;
+
+      .handle {
+        display: block;
+        background: #080;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0 -5px -5px 0;
+        cursor: move;
+        pointer-events: auto;
+
+        &:hover {
+          background: #0f0;
+        }
+      }
+    }
+
+    .animation-image-canvas {
+      display: block;
+    }
+
+    .animation-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      line-height: 0;
+      cursor: pointer;
+
+      &.lock {
+        pointer-events: none;
+      }
+
+      &.active {
+        cursor: move;
+        outline: 1px solid $highlight-secondary;
+
+        .animation-image-axis {
+          display: block;
+        }
+      }
+
+      &:hover {
+        outline: 1px solid $highlight;
+      }
+    }
+
+    .animation-image-axis {
+      display: none;
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      margin: -7px 0 0 -7px;
+      color: $highlight;
+      cursor: none;
+
+      &:hover {
+        color: $highlight-secondary;
+      }
+    }
+  }
+}
+
+frame-context {
+  z-index: 21;
+
+  img {
+    max-width: 100%;
+  }
+
+  .frame-context-current-box {
+    display: block;
+    position: absolute;
+    background: #f00;
+    opacity: 0.3;
+  }
+
+  .frame-context-select-box {
+    display: block;
+    position: absolute;
+    background: #00f;
+    opacity: 0.3;
+  }
+
+  .frame-context-wrapper {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .frame-context {
+    display: block;
+    padding: 5px;
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 0 1px 1px #aaa;
+    width: 350px;
+    height: 250px;
+    left: 50%;
+    bottom: 50px;
+    margin-left: -175px;
+    background: #fff;
+  }
+
+  button {
+    display: inline-block;
+  }
+}
+
+main-nav {
+  nav {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.disable-select {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  & * {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 }

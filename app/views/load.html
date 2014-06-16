@@ -1,0 +1,21 @@
+<div class="modal fade" id="modal-loading" ng-controller="LoadCtrl as loader">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <h4 class="text-center">{{loader.status}}</h4>
+
+                <div class="progress progress-striped active">
+                    <div class="progress-bar" role="progressbar" style="{{loader.currentStep / loader.totalStep}}">
+                    </div>
+                    <i class="fa fa-cog fa-spin moving-icon"></i>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <p class="text-center">Hold on there while we run the initial setup</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+[
+    {
+        "_id": "a1",
+        "timeline": "1b",
+        "index": 0,
+        "frame": 0,
+        "x": 0,
+        "y": 0,
+        "alpha": 1,
+        "pivotX": 0,
+        "pivotY": 0,
+        "angle": 0,
+        "length": 1,
+        "flipX": false,
+        "flipY": false,
+        "lock": true
+    },
+
+    {
+        "_id": "a2",
+        "timeline": "1a",
+        "index": 0,
+        "frame": 0,
+        "x": 0,
+        "y": 0,
+        "alpha": 1,
+        "pivotX": 0,
+        "pivotY": 0,
+        "angle": 0,
+        "length": 1,
+        "flipX": false,
+        "flipY": false,
+        "lock": true
+    },
+
+    {
+        "_id": "a3",
+        "timeline": "1c",
+        "index": 0,
+        "frame": 0,
+        "x": 0,
+        "y": 0,
+        "alpha": 1,
+        "pivotX": 0,
+        "pivotY": 0,
+        "angle": 0,
+        "length": 1,
+        "flipX": false,
+        "flipY": false,
+        "lock": true
+    }
+]

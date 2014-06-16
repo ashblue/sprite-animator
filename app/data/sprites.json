@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Barrel",
+        "_id": "barrel",
+        "image": "single-image1",
+        "width": 11,
+        "height": 16
+    },
+    {
+        "name": "Coal Sprite",
+        "_id": "coal-sprite",
+        "image": "coal-image",
+        "width": 30,
+        "height": 23
+    },
+    {
+        "name": "Single Frame Animation",
+        "_id": "single-frame-animation2",
+        "image": "single-image1",
+        "width": 11,
+        "height": 16
+    }
+]
