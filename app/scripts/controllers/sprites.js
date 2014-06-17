@@ -42,11 +42,10 @@ angular.module('spriteAnimatorApp')
         };
 
         this.remove = function (sprite) {
-            // Remove all corresponding timelines via calling
+            // @TODO Remove all corresponding timelines via calling
             // $scope.$emit('removeTimeline', timeline);
 //            timelineSrv.current = [];
 
-            // @TODO Wipe the upload sprite if there is an ID match
             $scope.$emit('clearUploadSprite', sprite);
 
 //            timelineSrv.list.forEach(function (timeline) {
@@ -55,6 +54,7 @@ angular.module('spriteAnimatorApp')
 //                    $scope.$emit('removeTimeline', timeline._id);
 //
 //                    // @TODO Move into timeline logic
+                        // @TODO Setup anim removal
 ////                    animSrv.list.forEach(function (anim) {
 ////                        if (anim.timelines.has(timeline._id)) {
 ////                            anim.timelines.erase(timeline._id);

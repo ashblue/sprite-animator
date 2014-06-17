@@ -1,7 +1,7 @@
 <div class="sprite-view">
     <h2>Sprite Sheets <small>Images ready for animating</small></h2>
     <input style="margin-bottom: 10px" class="form-control" type="search" ng-model="spriteSearch" placeholder="Filter">
-    <div class="list-group" ng-repeat="sprite in spritesCtrl.list | filter:spriteSearch" id="sprite_{{sprite._id}}">
+    <div class="list-group" ng-repeat="sprite in spritesCtrl.list | filter:spriteSearch | limitTo:20 | reverse" id="sprite_{{sprite._id}}">
         <a class="list-group-item">
             <span class="pull-left" style="margin-right: 10px">
                 <img class="thumb-constrain" ng-src="{{spritesCtrl.getImageSrc(sprite.image)}}" />

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('spriteAnimatorApp')
-    .controller('ImagesCtrl', function ($scope, imageSrv) {
+    .controller('ImagesCtrl', function ($scope, imageSrv, spriteSrv, zoomSrv) {
         var ctrl = this;
         this.list = imageSrv.list;
 
@@ -23,12 +23,10 @@ angular.module('spriteAnimatorApp')
         });
 
         // Inject the chosen image into the upload details
-        // @TODO Should be converted to an event emitter
         this.showImage = function (e, image) {
             e.preventDefault();
 
-//            var uploadCtrl = angular.element(document.getElementById('form-upload')).scope().uploadCtrl;
-//            uploadCtrl.setImage(image.src, true, image._id);
+            $scope.$emit('setUploadImage', image);
         };
 
         this.editImage = function (e, image) {
@@ -45,16 +43,11 @@ angular.module('spriteAnimatorApp')
 
             if (!window.sa.confirm.remove()) return;
 
+            $scope.$emit('clearUploadImage', image);
             imageSrv.destroy(image._id);
 
-            // @TODO Should be implemented in the model via event emitter
-//            // Force remove any sprite sheets referencing this image
-//            var sprites = [];
-//            spriteSrv.list.forEach(function (sprite) {
-//                if (sprite.image === image._id) {
-//                    sprites.push(sprite);
-//                }
-//            });
-//            sprites.forEach(function (sprite) { $scope.$emit('removeSprite', sprite); });
+            spriteSrv.list.forEach(function (sprite) {
+                if (sprite.image === image._id) $scope.$emit('removeSprite', sprite);
+            });
         };
     });
