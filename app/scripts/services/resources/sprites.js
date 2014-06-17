@@ -8,12 +8,12 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-  .service('spriteSrv', function spriteSrv ($rootScope, Resource) {
+  .service('spriteSrv', function ($rootScope, Resource) {
         var spriteSrv = new Resource(window.CONFIG.sprites.root, 'sprites', {
-            clean: function (id) {
+            clean: function (sprite) {
                 var timelineSrv = window.sa.resources.get('timelines');
                 timelineSrv.list.forEach(function (timeline) {
-                    if (timeline.sprite === id) {
+                    if (timeline.sprite === sprite._id) {
                         $rootScope.$broadcast('removeTimeline', timeline);
 
                         // @TODO Should be performed in the remove timeline logic

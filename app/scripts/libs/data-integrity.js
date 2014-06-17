@@ -80,8 +80,6 @@
                 return 'The following ' + primaryCol.slug + ' are missing ' + JSON.stringify(missingData)
                     + ' because of this the following ' + refCol.slug + ' have been affected ' + JSON.stringify(affectedTimelines);
             }
-
-            return this;
         }
     }
 })();

@@ -8,11 +8,11 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-  .service('imageSrv', function imagesSrv ($rootScope, Resource, spriteSrv) {
+  .service('imageSrv', function ($rootScope, Resource, spriteSrv) {
         var imageSrv = new Resource(window.CONFIG.images.root, 'images', {
-            clean: function (id) {
+            clean: function (image) {
                 spriteSrv.list.forEach(function (sprite) {
-                    if (sprite.image === id) {
+                    if (sprite.image === image._id) {
                         $rootScope.$broadcast('removeSprite', sprite);
                     }
                 });
@@ -20,7 +20,6 @@ angular.module('spriteAnimatorApp')
 
             verify: function (success, error) {
                 var errorMessage = sa.verify.data(this, spriteSrv, 'image');
-
                 if (errorMessage) error(errorMessage);
                 success();
             }

@@ -10,11 +10,13 @@
      * Service in the spriteAnimatorApp
      */
     angular.module('spriteAnimatorApp')
-        .service('resourceSrv', function resourceSrv (Collection, imageSrv, spriteSrv, timelineSrv) {
+        .service('resourceSrv', function resourceSrv (Collection, imageSrv, spriteSrv, animGroupSrv, animSrv, timelineSrv) {
             var resourceSrv = new Collection();
 
             resourceSrv.add(imageSrv)
                 .add(spriteSrv)
+                .add(animGroupSrv)
+                .add(animSrv)
                 .add(timelineSrv);
 
             window.sa.resources = resourceSrv;

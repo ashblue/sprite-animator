@@ -32,7 +32,9 @@
         },
 
         animations: {
-            root: '/data/animations.json'
+            root: '/data/animations.json',
+            defaultSpeed: 0.3,
+            defaultLength: 10
         },
 
         timelines: {

@@ -20,7 +20,7 @@
      * Service in the spriteAnimatorApp.
      */
     angular.module('spriteAnimatorApp')
-        .service('Resource', function Resource ($http) {
+        .service('Resource', function ($http) {
             var Resource = function (rootUrl, slug, options) {
                 $.extend(this, settings, options);
 
@@ -86,9 +86,14 @@
             Resource.prototype.set = function (id, key, value) {
                 var item = this.get(id);
 
+
                 if (typeof key !== 'object') {
-                    item[key] = value;
-                } else {
+                    if (!Array.isArray(item[key])) { // Regular set key
+                        item[key] = value;
+                    } else { // Insert a new array item
+                        item[key].push(value);
+                    }
+                } else { // Set group of key value pairs (does not work with arrays or objects)
                     for (var k in key) {
                         item[k] = key[k];
                     }
@@ -149,7 +154,7 @@
 
             Resource.prototype.destroy = function (id) {
                 var item = this.get(id);
-                this.clean(item._id);
+                this.clean(item);
                 this._remove(item);
 
                 if (window.CONFIG.online) $http.delete(this.url.root + '/' + item._id);
