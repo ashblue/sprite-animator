@@ -1,0 +1,107 @@
+<div class="container" ng-controller="AnimGroupCtrl as animGroup">
+    <div id="animation-manager" class="panel panel-default" ng-controller="AnimCtrl as anim">
+        <div class="panel-heading">
+            <div id="animation-manager-header">
+                <i class="fa fa-film"></i> {{animGroup.current.name}}
+                <span class="label label-default">{{anim.current.name}}</span>
+                <button ng-class="{ active: animGroup.showSettings }"
+                        ng-click="animGroup.toggleSettings()"
+                        title="Toggle visibility of animation group settings"
+                        class="btn btn-default pull-right btn-xs">
+                    <i class="fa fa-gear"></i>
+                </button>
+                <button ng-class="{ active: animGroup.show }"
+                        ng-click="animGroup.toggle()"
+                        title="Change current animation group" style="margin-right: 5px;"
+                        class="btn btn-default pull-right btn-xs">
+                    <i class="fa fa-folder-open"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-body" id="animation-group-manager" ng-show="animGroup.show">
+            <input style="width: auto;" class="pull-right form-control" type="search" ng-model="animGroupSearch" placeholder="Filter">
+
+            <h4>
+                Animation Groups
+                <button ng-click="animGroup.new()" class="btn btn-primary btn-xs"><span class="fa fa-plus-circle"></span></button>
+            </h4>
+
+            <p>All available animation groups.</p>
+
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Animations</th>
+                    <th>Width</th>
+                    <th>Height</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="group in animGroup.list | filter:animGroupSearch | reverse">
+                    <td>
+                        <input ng-model="group.name" class="form-control input-sm" type="text" required value="Group" />
+                    </td>
+                    <td>{{group.animations.length}}</td>
+                    <td>{{group.width}}</td>
+                    <td>{{group.height}}</td>
+                    <td>
+                        <button ng-click="animGroup.set(group)" class="btn-default btn btn-xs pull-right"><i class="fa fa-pencil"></i></button>
+                    </td>
+                    <td>
+                        <button ng-click="animGroup.remove(group)" class="btn-danger btn btn-xs pull-right"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div ng-show="animGroup.showSettings" id="animation-settings" class="panel-body">
+            <div ng-show="anim.current">
+                <h4>Current Animation Properties</h4>
+                <form>
+                    <div class="form-group">
+                        <label for="animation-name">Name</label>
+                        <input ng-model="anim.current.name" id="animation-name" class="form-control input-sm" type="text" value="Jump" />
+                    </div>
+                    <div class="form-group">
+                        <label for="animation-frame-duration">Frame Duration (seconds)</label>
+                        <input ng-model="anim.current.speed" id="animation-frame-duration" class="form-control input-sm" type="number" min="0.01" />
+                    </div>
+                </form>
+            </div>
+
+            <div ng-show="anim.show">
+                <input style="width: auto;" class="pull-right form-control" type="search" ng-model="animSearch" placeholder="Filter">
+
+                <h4>
+                    Animations
+                    <button ng-click="anim.new()" class="btn btn-primary btn-xs"><span class="fa fa-plus-circle"></span></button>
+                </h4>
+                <p>Available animations associated with this group.</p>
+
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Speed</th>
+                        <th>Frame Count</th>
+                        <th>Layers</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="item in anim.list | filter:animSearch | reverse">
+                        <td>{{item.name}}</td>
+                        <td>{{item.speed}}s</td>
+                        <td>{{item.length}}</td>
+                        <td>{{item.timelines.length}}</td>
+                        <td>
+                            <button ng-click="anim.set(item)" class="btn-default btn btn-xs pull-right"><i class="fa fa-pencil"></i></button>
+                        </td>
+                        <td>
+                            <button ng-click="anim.clickRemove(item)" class="btn-danger btn btn-xs pull-right"><i class="fa fa-trash-o"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
