@@ -1,0 +1,19 @@
+<div class="sprite-view">
+    <h2>Sprite Sheets <small>Images ready for animating</small></h2>
+    <input style="margin-bottom: 10px" class="form-control" type="search" ng-model="spriteSearch" placeholder="Filter">
+    <div class="list-group" ng-repeat="sprite in spritesCtrl.list | filter:spriteSearch" id="sprite_{{sprite._id}}">
+        <a class="list-group-item">
+            <span class="pull-left" style="margin-right: 10px">
+                <img class="thumb-constrain" ng-src="{{spritesCtrl.getImageSrc(sprite.image)}}" />
+            </span>
+
+            <div class="media-body">
+                <h4 class="media-heading">{{sprite.name}}</h4>
+                F-Width: {{sprite.width}}, F-Height: {{sprite.height}}
+                <button ng-click="spritesCtrl.editSprite($event, sprite)" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-edit"></span></button>
+                <button ng-click="spritesCtrl.uploadSwap(sprite)" title="Swap out the spritesheet image with a different one" class="btn btn-default btn-xs pull-right" style="margin-right: 5px;"><span class="fa fa-refresh"></span></button>
+                <button ng-click="spritesCtrl.clickRemove($event, sprite)" style="margin-right: 5px;" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button>
+            </div>
+        </a>
+    </div>
+</div>

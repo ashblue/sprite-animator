@@ -8,7 +8,7 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-    .service('zoomData', function Zoom() {
+    .service('zoomSrv', function ZoomSrv () {
         return {
             scale: window.CONFIG.scale
         };

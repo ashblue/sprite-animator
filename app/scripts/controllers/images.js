@@ -23,7 +23,7 @@ angular.module('spriteAnimatorApp')
         });
 
         // Inject the chosen image into the upload details
-        // @TODO On the fence with this, feels more like it should be converted to an event emitter
+        // @TODO Should be converted to an event emitter
         this.showImage = function (e, image) {
             e.preventDefault();
 
@@ -47,6 +47,7 @@ angular.module('spriteAnimatorApp')
 
             imageSrv.destroy(image._id);
 
+            // @TODO Should be implemented in the model via event emitter
 //            // Force remove any sprite sheets referencing this image
 //            var sprites = [];
 //            spriteSrv.list.forEach(function (sprite) {
