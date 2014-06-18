@@ -8,7 +8,7 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-    .service('animSrv', function ($rootScope, Resource) {
+    .factory('animSrv', function ($rootScope, Resource) {
         var animSrv = new Resource(window.CONFIG.animations.root, 'anims', {
             clean: function (anim) {
                 var animGroupSrv = sa.resources.get('animGroups');

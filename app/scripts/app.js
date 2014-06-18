@@ -27,6 +27,9 @@ angular
                 controller: 'LoadCtrl',
                 controllerAs: 'loader'
             })
+            .when('/about', {
+                templateUrl: 'views/about.html'
+            })
             .when('/sprites', {
                 templateUrl: 'views/sprite-sheets.html'
             })

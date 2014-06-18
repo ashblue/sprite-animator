@@ -1,0 +1,64 @@
+<div id="timeline" ng-show="timelinesCtrl.show">
+    <div class="resize-timeline"></div>
+
+    <div class="clearfix">
+        <div class="sidebar">
+            <div class="timeline-header">
+                <playback></playback>
+
+                <span export-animation title="Export animation" class="fa fa-download pull-right"></span>
+            </div>
+
+            <div class="timeline-content">
+                <div ng-repeat="layer in timelinesCtrl.list | orderBy:'zIndex'"
+                     data-id="{{layer._id}}" draggable="true"
+                     drag-and-drop-timelines
+                     ng-click="timelinesCtrl.setSelected(layer)"
+                     ng-class="{ active: timelinesCtrl.isSelected(layer) }"
+                     class="layer-details">
+                    <div class="protect-input"></div>
+                    <span class="name">{{layer.name}}</span>
+
+                    <span ng-click="timelinesCtrl.toggleShow($event, layer)"
+                          title="Toggle visible to hide in visual view"
+                          class="group pull-right">
+                        <i ng-show="layer.show" class="fa fa-eye"></i>
+                        <i ng-hide="layer.show" class="fa fa-eye-slash"></i>
+                    </span>
+
+                    <span ng-click="timelinesCtrl.toggleLock($event, layer)" title="Toggle lock to disable interactions"
+                          class="group pull-right">
+                        <i ng-show="layer.lock" class="fa fa-lock"></i>
+                        <i ng-hide="layer.lock" class="fa fa-unlock-alt"></i>
+                    </span>
+
+                    <span ng-click="timelinesCtrl.showImage(layer)" title="View attached sprite details"
+                          class="group pull-right">
+                        <i class="fa fa-picture-o"></i>
+                    </span>
+
+                    <span ng-click="timelinesCtrl.setName($event, layer)" title="Change layer name"
+                          class="group pull-right">
+                        <i class="fa fa-edit"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <scrub ng-style="scrubCtrl.getPos()"></scrub>
+            <scrub-list scrub-drop-zone ng-click="scrubCtrl.setIndex($event)" class="timeline-header"></scrub-list>
+            <scrub-duration ng-style="scrubCtrl.getDurationWidth()"></scrub-duration>
+
+            <div class="timeline-content">
+                <frames></frames>
+            </div>
+        </div>
+    </div>
+
+    <timeline-toolbar id="timeline-toolbar">
+        <span ng-click="timelinesCtrl.showSprite()" title="Add a new sprite sheet" class="fa fa-file"></span>
+        <span ng-click="timelinesCtrl.removeSelected()" title="Remove current layer" class="fa fa-trash-o"></span>
+        <span ng-click="timelinesCtrl.toggleHitbox()" title="Toggle visibility of hitbox" class="fa fa-square-o"></span>
+    </timeline-toolbar>
+</div>

@@ -8,8 +8,8 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-    .factory('zoomSrv', function ZoomSrv () {
+    .factory('scrubSrv', function ZoomSrv () {
         return {
-            scale: window.CONFIG.scale
+            index: 0
         };
     });

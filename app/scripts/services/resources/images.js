@@ -8,7 +8,7 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-  .service('imageSrv', function ($rootScope, Resource, spriteSrv) {
+  .factory('imageSrv', function ($rootScope, Resource, spriteSrv) {
         var imageSrv = new Resource(window.CONFIG.images.root, 'images', {
             clean: function (image) {
                 spriteSrv.list.forEach(function (sprite) {

@@ -20,7 +20,7 @@
      * Service in the spriteAnimatorApp.
      */
     angular.module('spriteAnimatorApp')
-        .service('Resource', function ($http) {
+        .factory('Resource', function ($http) {
             var Resource = function (rootUrl, slug, options) {
                 $.extend(this, settings, options);
 

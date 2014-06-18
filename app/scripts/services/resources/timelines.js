@@ -8,8 +8,9 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-  .service('timelineSrv', function ($rootScope, Resource) {
+  .factory('timelineSrv', function ($rootScope, Resource) {
         var timelineSrv = new Resource(window.CONFIG.timelines.root, 'timelines', {
+            current: []
 //            clean: function (id) {},
 
 //            verify: function (success, error) {}

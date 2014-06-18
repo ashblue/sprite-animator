@@ -8,7 +8,7 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-    .service('animGroupSrv', function ($rootScope, Resource, animSrv) {
+    .factory('animGroupSrv', function ($rootScope, Resource, animSrv) {
         var animGroupSrv = new Resource(window.CONFIG.animationGroups.root, 'animGroups', {
             current: null, // Keeps a record of the current animation group in memory
 

@@ -9,7 +9,7 @@
      * Service in the spriteAnimatorApp.
      */
     angular.module('spriteAnimatorApp')
-        .service('Collection', function Collection () {
+        .factory('Collection', function Collection () {
             var Collection = function () {
                 this.data = {};
                 this.list = [];

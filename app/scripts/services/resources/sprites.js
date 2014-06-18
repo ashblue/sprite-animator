@@ -8,7 +8,7 @@
  * Service in the spriteAnimatorApp.
  */
 angular.module('spriteAnimatorApp')
-  .service('spriteSrv', function ($rootScope, Resource) {
+  .factory('spriteSrv', function ($rootScope, Resource) {
         var spriteSrv = new Resource(window.CONFIG.sprites.root, 'sprites', {
             clean: function (sprite) {
                 var timelineSrv = window.sa.resources.get('timelines');

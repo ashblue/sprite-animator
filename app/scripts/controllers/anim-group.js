@@ -67,5 +67,6 @@ angular.module('spriteAnimatorApp')
         // Hack to force delay init until after all controllers have loaded, curerntly no way to do this in Angular
         window.setTimeout(function () {
             ctrl.init();
+            $scope.$apply();
         }, 300);
     });

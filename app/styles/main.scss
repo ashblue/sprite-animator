@@ -343,7 +343,6 @@ $highlight-secondary: #e30482;
         width: $tick-length * ($tick - 1);
         cursor: pointer;
 
-
         .tick {
           float: left;
           display: block;
@@ -558,11 +557,9 @@ frame-context {
   }
 }
 
-main-nav {
-  nav {
-    position: relative;
-    z-index: 1;
-  }
+#main-nav {
+  position: relative;
+  z-index: 1;
 }
 
 .disable-select {

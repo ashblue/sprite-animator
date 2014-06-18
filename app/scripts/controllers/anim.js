@@ -68,6 +68,7 @@ angular.module('spriteAnimatorApp')
             if (this.current && this.current._id === anim._id) this.current = null;
             this.list.erase(anim);
             animSrv.destroy(anim._id);
+            $scope.$emit('clearAnim');
         };
 
         this.setCurrent = function (current) {

@@ -40,6 +40,7 @@
                 </tr>
                 <tr ng-repeat="group in animGroup.list | filter:animGroupSearch | reverse">
                     <td>
+                        <!-- @TODO Needs a change monitor that can fire dirty changes -->
                         <input ng-model="group.name" class="form-control input-sm" type="text" required value="Group" />
                     </td>
                     <td>{{group.animations.length}}</td>
@@ -61,10 +62,12 @@
                 <form>
                     <div class="form-group">
                         <label for="animation-name">Name</label>
+                        <!-- @TODO Needs a change monitor that can fire dirty changes -->
                         <input ng-model="anim.current.name" id="animation-name" class="form-control input-sm" type="text" value="Jump" />
                     </div>
                     <div class="form-group">
                         <label for="animation-frame-duration">Frame Duration (seconds)</label>
+                        <!-- @TODO Needs a change monitor that can fire dirty changes -->
                         <input ng-model="anim.current.speed" id="animation-frame-duration" class="form-control input-sm" type="number" min="0.01" />
                     </div>
                 </form>
