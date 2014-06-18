@@ -426,6 +426,14 @@ $highlight-secondary: #e30482;
   height: 200px;
 }
 
+#offline {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 2000;
+}
+
 .animation-stage {
   display: block;
   position: absolute;

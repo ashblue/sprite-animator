@@ -14,6 +14,7 @@
 
     var _syncTotal = 0;
     var _syncCount = 0;
+    var _$offline = $('#offline');
 
     var _private = {
         beginSync: function () {
@@ -28,11 +29,22 @@
             if (_syncTotal !== _syncCount) {
                 return 'Warning, if you exit now data will be lost (still saving to server).'
             }
+        },
+
+        offlineCheck: function () {
+            if (!navigator.online) {
+                _$offline.show();
+            } else {
+                _$offline.hide();
+            }
         }
     };
 
     // Make sure all data posts are resolved
     if (window.CONFIG.online) window.onbeforeunload = _private.verifySync();
+
+    // Warn user if they go offline
+    if (window.CONFIG.online) window.setInterval(_private.offlineCheck, 1000);
 
     /**
      * @ngdoc service
