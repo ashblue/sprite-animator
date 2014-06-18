@@ -1,0 +1,22 @@
+<!doctype html> <html class="no-js"> <head> <meta charset="utf-8"> <title></title> <meta name="description" content=""> <meta name="viewport" content="width=device-width"> <!-- Place favicon.ico and apple-touch-icon.png in the root directory --> <link rel="stylesheet" href="styles/vendor.7e033639.css"> <link rel="stylesheet" href="styles/main.980c076e.css">  <body ng-app="spriteAnimatorApp"> <!-- Add your site or application content here --> <nav id="main-nav" class="navbar navbar-default" role="navigation" ng-controller="HeaderCtrl as header"> <div class="container"> <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a ng-class="{ active: header.isActive('/') }" class="navbar-brand" href="#">Sprite Animator</a> </div> <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> <ul class="nav navbar-nav navbar-right"> <li id="zoom" ng-controller="ZoomCtrl as zoom"> <span ng-class="scaleValue" id="scale-value">{{zoom.scale}}</span> <input ng-mousedown="scaleValue='active'" ng-blur="scaleValue=''" ng-model="zoom.scale" ng-change="zoom.setScale()" type="range" id="scale-range" min="1" max="4"> </li> <li ng-class="{ active: header.isActive('/') }"><a ng-href="#">Animations</a></li> <li ng-class="{ active: header.isActive('/sprites') }"><a ng-href="#/sprites">Sprite Sheets</a></li> <li ng-class="{ active: header.isActive('/about') }"><a ng-href="#/about">About</a></li> </ul> </div> </div> </nav> <!--[if lt IE 7]>
+<div class="container">
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+</div>
+<![endif]--> <div ng-view=""></div> <div id="offline" class="alert alert-danger"> <p><strong>Warning!</strong> Your are currently offline, hold on before making any changes to make sure you don't loose progress</p> </div> <!-- Google Analytics: change UA-XXXXX-X to be your site's ID --> <script>(function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');</script> <!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.min.js"></script>
+<![endif]--> <script src="scripts/vendor.50f4e6a5.js"></script> <script src="scripts/scripts.ae603987.js"></script>  

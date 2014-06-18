@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Layer Name 2",
+        "_id": "1b",
+        "sprite": "barrel",
+        "frames": [
+            "a1"
+        ],
+        "zIndex": 1,
+        "lock": false,
+        "show": true
+    },
+
+    {
+        "name": "Layer Name 1",
+        "_id": "1a",
+        "sprite": "coal-sprite",
+        "frames": [
+            "a2"
+        ],
+        "zIndex": 0,
+        "lock": false,
+        "show": true
+    },
+
+    {
+        "name": "Layer Name 3",
+        "_id": "1c",
+        "sprite": "barrel",
+        "frames": [
+            "a3"
+        ],
+        "zIndex": 2,
+        "lock": false,
+        "show": true
+    }
+]

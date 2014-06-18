@@ -1,0 +1,41 @@
+[
+    {
+        "name": "Coal",
+        "_id": "2a",
+        "animations": [],
+        "width": 20,
+        "height": 20
+    },
+    {
+        "name": "Coal",
+        "_id": "3a",
+        "animations": [],
+        "width": 20,
+        "height": 20
+    },
+    {
+        "name": "Coal",
+        "_id": "4a",
+        "animations": [],
+        "width": 20,
+        "height": 20
+    },
+    {
+        "name": "Coal",
+        "_id": "5a",
+        "animations": [],
+        "width": 20,
+        "height": 20
+    },
+    {
+        "name": "Coal",
+        "_id": "1a",
+        "animations": [
+            "3a",
+            "2a",
+            "1a"
+        ],
+        "width": 20,
+        "height": 20
+    }
+]
