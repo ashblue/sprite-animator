@@ -12,6 +12,28 @@
         syncDelay: 1000 // Time delay before data is synced with the server
     };
 
+    var _syncTotal = 0;
+    var _syncCount = 0;
+
+    var _private = {
+        beginSync: function () {
+            _syncTotal += 1;
+        },
+
+        endSync: function () {
+            _syncCount += 1;
+        },
+
+        verifySync: function () {
+            if (_syncTotal !== _syncCount) {
+                return 'Warning, if you exit now data will be lost (still saving to server).'
+            }
+        }
+    };
+
+    // Make sure all data posts are resolved
+    if (window.CONFIG.online) window.onbeforeunload = _private.verifySync();
+
     /**
      * @ngdoc service
      * @name spriteAnimatorApp.Resource
@@ -116,7 +138,6 @@
             };
 
             /**
-             * @TODO If a sync has yet to happen and the user exits early, fire an alert warning
              * @param id
              */
             Resource.prototype.addDirt = function (id) {
@@ -124,11 +145,16 @@
                 var item = this.get(id);
 
                 if (window.CONFIG.online) {
+                    _private.beginSync();
                     if (this.timeout[id]) this.timeout[id].clearTimeout();
                     this.timeout[id] = window.setTimeout(function () {
                         $http.put(collection.url + '/' + id, item)
+                            .success(function () {
+                                _private.endSync();
+                            })
                             .error(function () {
-                                console.error('Failure to communicate with server to update model, attempting again in' + this.syncDelay + 'ms');
+                                _private.endSync();
+                                console.error('Failure to communicate with server to update model, attempting again');
                                 collection.addDirt(id);
                             });
                     }, this.syncDelay);
@@ -153,11 +179,22 @@
             };
 
             Resource.prototype.destroy = function (id) {
+                var collection = this;
                 var item = this.get(id);
-                this.clean(item);
-                this._remove(item);
+                if (item) this.clean(item);
+                if (item) this._remove(item);
 
-                if (window.CONFIG.online) $http.delete(this.url.root + '/' + item._id);
+                if (window.CONFIG.online) {
+                    _private.beginSync();
+                    $http.delete(this.url.root + '/' + item._id)
+                        .success(function () {
+                            _private.endSync();
+                        })
+                        .error(function () {
+                            _private.endSync();
+                            collection.destroy(id);
+                        });
+                }
 
                 return this;
             };

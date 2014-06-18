@@ -43,7 +43,6 @@ angular.module('spriteAnimatorApp')
             ctrl.selected = timeline._id;
         });
 
-        // @TODO Is this even used?
         $scope.$on('clearSelectTimeline', function () {
             ctrl.selected = null;
         });

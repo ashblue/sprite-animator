@@ -24,7 +24,7 @@
 
             var ctrl = this;
             this.currentStep = 0;
-            this.totalSteps = resourceSrv.list.length * 2; // @TODO Calculate this total (totalFactories * 2)
+            this.totalSteps = resourceSrv.list.length * 2;
             this.status = MESSAGES.populate;
             this.errorMessage = null;
             this.errors = [];
@@ -46,11 +46,9 @@
             };
 
             this.start = function () {
-                $('#modal-loading').on('hidden.bs.modal', function () {
-                    $scope.$apply(function () {
-                        $location.search('redirect', null).path($routeParams.redirect);
-                    });
-                }).modal('hide');
+                var $modal =
+                $('#modal-loading').modal('hide');
+                $location.search('redirect', null).path($routeParams.redirect);
             };
 
             this.loadSuccess = function () {
