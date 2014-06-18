@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('spriteAnimatorApp')
-    .controller('SpritesCtrl', function ($scope, $routeParams, spriteSrv, imageSrv, zoomSrv) {        
+(function () {
+    var app = angular.module('spriteAnimatorApp');
+    app.controller('SpritesCtrl', function ($scope, $routeParams, spriteSrv, imageSrv, zoomSrv) {
         var ctrl = this;
         this.list = spriteSrv.list;
         $scope.spriteSearch = $routeParams.spriteSearch; // Force filter if URL param is available
@@ -42,28 +43,7 @@ angular.module('spriteAnimatorApp')
         };
 
         this.remove = function (sprite) {
-            // @TODO Remove all corresponding timelines via calling
-            // $scope.$emit('removeTimeline', timeline);
-//            timelineSrv.current = [];
-
             $scope.$emit('clearUploadSprite', sprite);
-
-//            timelineSrv.list.forEach(function (timeline) {
-//                if (timeline.sprite === sprite._id) {
-//                    timelineSrv.destroy(timeline._id);
-//                    $scope.$emit('removeTimeline', timeline._id);
-//
-//                    // @TODO Move into timeline logic
-                        // @TODO Setup anim removal
-////                    animSrv.list.forEach(function (anim) {
-////                        if (anim.timelines.has(timeline._id)) {
-////                            anim.timelines.erase(timeline._id);
-////                            animSrv.addDirt(anim._id);
-////                        }
-////                    });
-//                }
-//            });
-
             spriteSrv.destroy(sprite._id);
         };
 
@@ -77,3 +57,41 @@ angular.module('spriteAnimatorApp')
             $scope.$emit('setUploadSprite', sprite);
         };
     });
+
+    app.controller('SpriteModalCtrl', function ($scope, spriteSrv, imageSrv) {
+        $scope.list = spriteSrv.list;
+        $scope.page = 0;
+        $scope.pageSize = 10;
+
+        $scope.pageCount = function () {
+            return Math.ceil($scope.list.length / $scope.pageSize);
+        };
+
+        $scope.select = function (e, sprite) {
+            e.preventDefault();
+            $('#sprite-modal').modal('hide');
+            $scope.$emit('selectSprite', sprite);
+        };
+
+        $scope.getImageSrc = function (id) {
+            var image = imageSrv.get(id);
+            return image ? image.src : '';
+        };
+    });
+
+    app.filter('startFrom', function() {
+        return function(input, start) {
+            return input.slice(start);
+        }
+    });
+
+    app.directive('spriteModal', function() {
+        return {
+            restrict: 'E',
+            templateUrl: 'views/sprites/sprites-view-modal.html',
+            controller: 'SpriteModalCtrl',
+            controllerAs: 'spriteModalCtrl'
+        };
+    });
+})();
+

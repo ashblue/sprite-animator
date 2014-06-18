@@ -8,7 +8,7 @@
  * Controller of the spriteAnimatorApp
  */
 angular.module('spriteAnimatorApp')
-    .controller('AnimGroupCtrl', function ($scope, animGroupSrv) {
+    .controller('AnimGroupCtrl', function ($rootScope, $scope, animGroupSrv) {
         var ctrl = this;
         this.show = false; // Show the manager
         this.showSettings = false; // Show the settings
@@ -20,7 +20,8 @@ angular.module('spriteAnimatorApp')
 
         this.init = function () {
             // Force set the animation group to the current at load or first if nothing is present
-            this.set(animGroupSrv.current || _.last(animGroupSrv.list));
+            animGroupSrv.current = animGroupSrv.current || _.last(animGroupSrv.list)
+            this.set(animGroupSrv.current);
         };
 
         this.new = function () {
@@ -35,7 +36,7 @@ angular.module('spriteAnimatorApp')
         this.set = function (animGroup) {
             animGroupSrv.current = animGroup;
             this.current = animGroup;
-            if (animGroup) $scope.$broadcast('setAnimGroup', animGroup);
+            if (animGroup) $rootScope.$broadcast('setAnimGroup', animGroup);
         };
 
         this.remove = function (animGroup) {

@@ -2,17 +2,19 @@
 
 (function () {
 angular.module('spriteAnimatorApp')
-    .controller('TimelinesCtrl', function ($rootScope, $scope, timelineSrv, spriteSrv, frameSrv, scrubSrv) {
+    .controller('TimelinesCtrl', function ($rootScope, $scope, animSrv, timelineSrv, spriteSrv, frameSrv, scrubSrv) {
         var ctrl = this;
         this.list = timelineSrv.current;
         this.selected = null;
         this.show = false;
+        this.anim = null;
 
         $scope.$on('setAnim', function (e, anim) {
             ctrl.clear();
             if (!anim || !anim._id) return;
 
             ctrl.show = true;
+            ctrl.anim = anim;
 
             anim.timelines.forEach(function (id) {
                 var data = timelineSrv.get(id);
@@ -53,6 +55,7 @@ angular.module('spriteAnimatorApp')
             this.list.splice(0, ctrl.list.length);
             this.selected = null;
             this.show = false;
+            this.anim = null;
             $scope.$emit('clearTimelines');
         };
 
@@ -160,7 +163,8 @@ angular.module('spriteAnimatorApp')
                     "flipY": false,
                     "lock": true
                 }, function (frame) {
-                    timeline.frames.push(frame._id);
+                    timelineSrv.set(timeline, 'frames', frame._id);
+                    animSrv.set(ctrl.anim, 'timelines', timeline._id);
                     ctrl.list.push(timeline);
                 });
             });

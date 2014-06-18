@@ -7,7 +7,7 @@
         populate: true,
 
         // Force loads in dummy data
-        debug: true,
+        debug: false,
 
         // Whether or not hitboxes are visible
         hitBoxVisible: true,

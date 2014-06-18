@@ -1,12 +1,16 @@
 'use strict';
 
 (function () {
-angular.module('spriteAnimatorApp')
-    .controller('FramesCtrl', function ($scope, timelineSrv, frameSrv, scrubSrv) {
+    var app = angular.module('spriteAnimatorApp');
+    app.controller('FramesCtrl', function ($scope, timelineSrv, frameSrv, scrubSrv) {
         var disabled = false; // Used to prevent double creating elements on the timeline
         var ctrl = this;
 
-        $scope.$on(['clearFrames', '$destroy'], function (e) {
+        $scope.$on('clearFrames', function (e) {
+            ctrl.clear();
+        });
+
+        $scope.$on('$destroy', function (e) {
             ctrl.clear();
         });
 
@@ -47,8 +51,10 @@ angular.module('spriteAnimatorApp')
         this.setFrame = function (frame) {
             scrubSrv.index = frame.index;
 
+            $scope.$emit('setFrameContext', frame);
+
             if (frameSrv.current === frame) {
-                $scope.$emit('showFrameContext');
+                $scope.$emit('showFrameContext', frame);
             } else {
                 frameSrv.current = frame;
                 $scope.$emit('setTimeline', timelineSrv.get(frame.timeline));
@@ -90,6 +96,190 @@ angular.module('spriteAnimatorApp')
             return timeline.frames.map(function (id) {
                 return frameSrv.get(id);
             });
+        };
+    });
+
+    var _event = {};
+
+    // Throws up the DAT GUI display
+    app.controller('FrameEditorCtrl', function ($scope, frameSrv) {
+        var self = this;
+        var $gui = $('#dat-gui');
+        var gui = new dat.GUI({ autoPlace: false });
+        var guiPos = gui.addFolder('Position');
+        var guiDetails = gui.addFolder('Details');
+
+        // Hack to make property changes save on changed models
+        _event.addDirt = function () {
+            frameSrv.addDirt(this._id);
+            $scope.$apply();
+        };
+
+        $gui.append(gui.domElement).hide();
+
+        $scope.$on('setFrame', function (e, frame) {
+            self.setFrame(frame);
+        });
+
+        ['clearFrame', 'clearTimelines'].forEach(function (call) {
+            $scope.$on(call, function () {
+                self.clearFrame();
+            });
+        });
+
+        this.setFrame = function (frame) {
+            this.clearFrame();
+
+            // Looks nasty but we have to monitor all the model properties for changes so they can be saved to the server
+            guiPos.add(frame, 'x').onChange(_event.addDirt.bind(frame));
+            guiPos.add(frame, 'y').onChange(_event.addDirt.bind(frame));
+            guiPos.open();
+
+            guiDetails.add(frame, 'frame', 0).onChange(_event.addDirt.bind(frame));
+            guiDetails.add(frame, 'alpha', 0, 1).step(0.01).onChange(_event.addDirt.bind(frame));
+            guiDetails.add(frame, 'flipX').onChange(_event.addDirt.bind(frame));
+            guiDetails.add(frame, 'flipY').onChange(_event.addDirt.bind(frame));
+            guiDetails.add(frame, 'pivotX', 0).onChange(_event.addDirt.bind(frame));
+            guiDetails.add(frame, 'pivotY', 0).onChange(_event.addDirt.bind(frame));
+            guiDetails.add(frame, 'angle', 0, 360).onChange(_event.addDirt.bind(frame));
+            guiDetails.open();
+
+            $gui.show();
+        };
+
+        this.clearFrame = function () {
+            $gui.hide();
+
+            guiPos.__controllers.forEach(function (c) {
+                guiPos.remove(c);
+            });
+            guiPos.__controllers = [];
+
+            guiDetails.__controllers.forEach(function (c) {
+                guiDetails.remove(c);
+            });
+            guiDetails.__controllers = [];
+        };
+
+        $scope.$on('$destroy', function () {
+            $('#dat-gui').children().detach();
+        });
+    });
+
+    // DAT GUI container
+    app.directive('frameProperties', function() {
+        return {
+            restrict: 'E',
+            templateUrl: 'views/frames/frames-properties-view.html',
+            controller: 'FrameEditorCtrl',
+            controllerAs: 'framesEditorCtrl'
+        };
+    });
+
+    app.controller('FramesContextCtrl', function ($scope, frameSrv, timelineSrv) {
+        var ctrl = this;
+        this.current = null;
+        this.currentImage = {};
+
+        $scope.$on('showFrameContext', function (e, frame) {
+            ctrl.show(frame);
+        });
+
+        ['clearFrame', 'clearTimelines'].forEach(function (call) {
+            $scope.$on(call, function () {
+                ctrl.current = null;
+            });
+        });
+
+        this.show = function (frame) {
+            var $container = $('#frame-context-select');
+            var image = frameSrv.getImage(frame);
+            var sprite = frameSrv.getSprite(frame);
+            var frameWidth = image.width / sprite.width;
+
+            this.currentImage = image;
+            this.current = frame;
+
+            var pos = this.getFramePos(frame, frame.frame);
+
+            $('.frame-context-current-box').css(pos);
+        };
+
+        this.setHighlight = function (e) {
+            // Turn event coordinates into a frame position
+            var sprite = frameSrv.getSprite(this.current);
+            var image = frameSrv.getImage(this.current);
+            var parentOffset = $(e.currentTarget).offset();
+            var widthAdjust = $(e.currentTarget).width() / image.width; // Percentage change from the real width and height
+            var heightAdjust = $(e.currentTarget).height() / image.height;
+            var x = (e.pageX - parentOffset.left) / widthAdjust;
+            var y = (e.pageY - parentOffset.top) / heightAdjust;
+
+            // We must figure out how large the stretched frame size is
+            var frame = Math.max(Math.floor(x / sprite.width), 0) +  // x pos
+                (Math.floor(y / sprite.height) * (image.width / sprite.width)); // y pos
+
+            // Get position via getFramePos
+            var pos = this.getFramePos(this.current, frame);
+            $('.frame-context-select-box').css(pos).show();
+        };
+
+        this.highlightClear = function () {
+            $('.frame-context-select-box').hide();
+        };
+
+        this.setFrame = function (e) {
+            var sprite = frameSrv.getSprite(this.current);
+            var image = frameSrv.getImage(this.current);
+            var parentOffset = $(e.currentTarget).offset();
+            var widthAdjust = $(e.currentTarget).width() / image.width; // Percentage change from the real width and height
+            var heightAdjust = $(e.currentTarget).height() / image.height;
+            var x = (e.pageX - parentOffset.left) / widthAdjust;
+            var y = (e.pageY - parentOffset.top) / heightAdjust;
+            var frame = Math.max(Math.floor(x / sprite.width), 0) +  // x pos
+                (Math.floor(y / sprite.height) * (image.width / sprite.width)); // y pos
+
+            this.current.frame = frame;
+            this.show(this.current);
+            frameSrv.addDirt(this.current._id);
+            $scope.$emit('setFrame', this.current);
+        };
+
+        this.getFramePos = function (frame, framePos) {
+            var image = frameSrv.getImage(frame);
+            var sprite = frameSrv.getSprite(frame);
+            var frameWidth = image.width / sprite.width;
+
+            return {
+                width: (sprite.width / image.width) * 100 + '%',
+                height: (sprite.height / image.height) * 100 + '%',
+                left: ((framePos === 0 ? 0 : (framePos % frameWidth) * sprite.width) / image.width) * 100 + '%',
+                top: ((Math.floor(framePos / frameWidth) * sprite.height) / image.height) * 100 + '%'
+            }
+        };
+
+        this.hide = function () {
+            this.current = null;
+        };
+
+        this.remove = function () {
+            var frame = this.current;
+            var timeline = timelineSrv.get(frame.timeline);
+            timeline.frames.erase(frame._id);
+            $scope.$emit('clearFrame', frame);
+            $scope.$emit('removeFrame', frame);
+        };
+    });
+
+    app.directive('frameContext', function() {
+        return {
+            restrict: 'E',
+            templateUrl: 'views/frames/frames-context-view.html',
+            controller: 'FramesContextCtrl',
+            controllerAs: 'framesContextCtrl',
+            link: function (scope, el, attr) {
+                el.draggable({ handle: '.modal-drag' });
+            }
         };
     });
 })();

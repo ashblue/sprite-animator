@@ -12,10 +12,13 @@ angular.module('spriteAnimatorApp')
         var spriteSrv = new Resource(window.CONFIG.sprites.root, 'sprites', {
             clean: function (sprite) {
                 var timelineSrv = window.sa.resources.get('timelines');
+                var timelines = [];
                 timelineSrv.list.forEach(function (timeline) {
-                    if (timeline.sprite === sprite._id) {
-                        $rootScope.$broadcast('removeTimeline', timeline);
-                    }
+                    if (timeline.sprite === sprite._id) timelines.push(timeline);
+                });
+
+                timelines.forEach(function (timeline) {
+                    $rootScope.$broadcast('removeTimeline', timeline);
                 });
             },
 

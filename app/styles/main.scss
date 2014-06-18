@@ -513,6 +513,16 @@ $highlight-secondary: #e30482;
 
 frame-context {
   z-index: 21;
+  position: absolute;
+
+  .modal-drag {
+    height: 28px;
+    background: #ccc;
+    cursor: move;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: 5px
+  }
 
   img {
     max-width: 100%;
@@ -540,16 +550,19 @@ frame-context {
 
   .frame-context {
     display: block;
-    padding: 5px;
     position: absolute;
-    border-radius: 10px;
-    box-shadow: 0 0 1px 1px #aaa;
-    width: 350px;
-    height: 250px;
-    left: 50%;
-    bottom: 50px;
-    margin-left: -175px;
+    min-width: 200px;
+    min-height: 200px;
+    top: 100px;
+    left: 100px;
     background: #fff;
+  }
+
+  .frame-content {
+    padding: 5px;
+    border: 1px solid #ccc;
+    resize: both;
+    overflow: hidden;
   }
 
   button {

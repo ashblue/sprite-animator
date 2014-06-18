@@ -10,6 +10,8 @@
 angular.module('spriteAnimatorApp')
     .factory('animSrv', function ($rootScope, Resource) {
         var animSrv = new Resource(window.CONFIG.animations.root, 'anims', {
+            last: null,
+
             clean: function (anim) {
                 var animGroupSrv = sa.resources.get('animGroups');
                 var timelineSrv = sa.resources.get('timelines');
