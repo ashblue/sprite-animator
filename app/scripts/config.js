@@ -17,32 +17,32 @@
 
         images: {
             // Replace with an actual URL to your images root
-            root: '/data/images.json'
+            root: './data/images.json'
         },
 
         sprites: {
             // Also replace with a real url
-            root: '/data/sprites.json'
+            root: './data/sprites.json'
         },
 
         animationGroups: {
-            root: '/data/animation-groups.json',
+            root: './data/animation-groups.json',
             defaultWidth: 20,
             defaultHeight: 20
         },
 
         animations: {
-            root: '/data/animations.json',
+            root: './data/animations.json',
             defaultSpeed: 0.3,
             defaultLength: 10
         },
 
         timelines: {
-            root: '/data/timelines.json'
+            root: './data/timelines.json'
         },
 
         frames: {
-            root: '/data/frames.json'
+            root: './data/frames.json'
         }
     };
 }());
