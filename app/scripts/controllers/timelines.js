@@ -45,7 +45,6 @@ angular.module('spriteAnimatorApp')
         });
 
         $scope.$on('removeTimeline', function (e, timeline) {
-            console.log('hit');
             ctrl.remove(timeline);
         });
 

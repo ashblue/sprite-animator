@@ -2,7 +2,7 @@
 
 (function () {
 angular.module('spriteAnimatorApp')
-    .controller('FramesCtrl', function ($scope, timelineSrv, frameSrv) {
+    .controller('FramesCtrl', function ($scope, timelineSrv, frameSrv, scrubSrv) {
         var disabled = false; // Used to prevent double creating elements on the timeline
         var ctrl = this;
 
@@ -45,6 +45,8 @@ angular.module('spriteAnimatorApp')
         };
 
         this.setFrame = function (frame) {
+            scrubSrv.index = frame.index;
+
             if (frameSrv.current === frame) {
                 $scope.$emit('showFrameContext');
             } else {
