@@ -120,7 +120,7 @@
         };
     });
 
-    app.directive('scrubDropZone', function () {
+    app.directive('scrubDropZone', function (animSrv) {
         return {
             restrict: 'A',
             link: function($scope, el, attr) {
@@ -131,6 +131,8 @@
                     $scope.$apply(function () {
                         if (duration || duration === 0) currentAnim.length = duration + 1;
                     });
+
+                    animSrv.addDirt(currentAnim._id);
                 };
 
                 el.bind('dragover', _event.disable);

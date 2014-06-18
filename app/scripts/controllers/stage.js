@@ -170,6 +170,7 @@
                             if (animGroupSrv.current.height < 0) animGroupSrv.current.height = 0;
                             origin.y = e.clientY;
                         }
+                        animGroupSrv.addDirt(animGroupSrv.current);
                     });
                 });
 

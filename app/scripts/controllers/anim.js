@@ -35,6 +35,10 @@ angular.module('spriteAnimatorApp')
             ctrl.remove(anim);
         });
 
+        this.addDirt = function (item) {
+            animSrv.addDirt(item);
+        };
+
         this.clear = function () {
             this.current = null; // Current animation
             this.list = []; // Current animation list
