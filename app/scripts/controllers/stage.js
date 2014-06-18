@@ -12,7 +12,7 @@
     app.controller('StageCtrl', function ($scope, zoomSrv, timelineSrv, spriteSrv, imageSrv, animGroupSrv, scrubSrv, frameSrv) {
         var ctrl = this;
         this.list = timelineSrv.current;
-        this.show = true;
+        this.show = false;
         var select = null;
 
         this.clear = function () {
