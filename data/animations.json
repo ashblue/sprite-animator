@@ -1,0 +1,27 @@
+[
+    {
+        "_id": "1a",
+        "name": "Jump Start",
+        "speed": 0.3,
+        "length": 10,
+        "timelines": [
+            "1a",
+            "1b",
+            "1c"
+        ]
+    },
+    {
+        "_id": "2a",
+        "name": "Jump During",
+        "speed": 0.3,
+        "length": 10,
+        "timelines": []
+    },
+    {
+        "_id": "3a",
+        "name": "Jump End",
+        "speed": 0.3,
+        "length": 10,
+        "timelines": []
+    }
+]
