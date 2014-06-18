@@ -2,7 +2,7 @@
 
 (function () {
 angular.module('spriteAnimatorApp')
-    .controller('TimelinesCtrl', function ($scope, animSrv, timelineSrv, spriteSrv, frameSrv, scrubSrv, zoomSrv) {
+    .controller('TimelinesCtrl', function ($rootScope, $scope, timelineSrv, spriteSrv, frameSrv, scrubSrv) {
         var ctrl = this;
         this.list = timelineSrv.current;
         this.selected = null;
@@ -42,6 +42,11 @@ angular.module('spriteAnimatorApp')
 
         $scope.$on('clearAnim', function () {
             ctrl.clear();
+        });
+
+        $scope.$on('removeTimeline', function (e, timeline) {
+            console.log('hit');
+            ctrl.remove(timeline);
         });
 
         this.clear = function () {
@@ -85,9 +90,8 @@ angular.module('spriteAnimatorApp')
 
         // Set the clicked item to active and strip active from all exiting items
         this.setSelected = function (timeline) {
-            // @TODO Come back and fix this after frames are working again
-//            var frame = frameSrv.getFrameIndex(timeline._id, scrubSrv.index);
-//            $scope.$emit('setFrame', frame);
+            var frame = frameSrv.getFrameIndex(timeline._id, scrubSrv.index);
+            $rootScope.$broadcast('setFrame', frame);
             this.selected = timeline._id;
         };
 
@@ -115,9 +119,13 @@ angular.module('spriteAnimatorApp')
 
             // Clean out all existing frames
             var timeline = timelineSrv.get(this.selected);
+            this.remove(timeline);
+        };
+
+        this.remove = function (timeline) {
             this.list.erase(timeline);
             this.selected = null;
-            $scope.$emit('removeTimeline', timeline);
+            $scope.$emit('clearFrames', timeline);
             timelineSrv.destroy(timeline);
         };
 

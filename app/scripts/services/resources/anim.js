@@ -27,7 +27,7 @@ angular.module('spriteAnimatorApp')
 
                 // Delete the timelines in a separate stack so the cleanup doesn't conflict
                 stack.forEach(function (timeline) {
-                    $rootScope.$emit('removeTimeline', timeline);
+                    $rootScope.$broadcast('removeTimeline', timeline);
                 });
             },
 

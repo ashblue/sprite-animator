@@ -50,8 +50,18 @@
             <scrub-list scrub-drop-zone ng-click="scrubCtrl.setIndex($event)" class="timeline-header"></scrub-list>
             <scrub-duration ng-style="scrubCtrl.getDurationWidth()"></scrub-duration>
 
-            <div class="timeline-content">
-                <frames></frames>
+            <div class="timeline-content" ng-controller="FramesCtrl as framesCtrl">
+                <div class="layer-timeline" ng-repeat="timeline in timelinesCtrl.list | orderBy:'zIndex'">
+                    <div class="tick-background" ng-click="framesCtrl.add($event, timeline)">
+                        <span class="tick" ng-repeat="n in [] | range:500"></span>
+                    </div>
+
+                    <span class="tick-fill"
+                          ng-repeat="tick in framesCtrl.getFrames(timeline)"
+                          ng-class="{ active: framesCtrl.isActive(tick) }"
+                          ng-click="framesCtrl.setFrame(tick)"
+                          ng-style="framesCtrl.getPos(tick)"></span>
+                </div>
             </div>
         </div>
     </div>

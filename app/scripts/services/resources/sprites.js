@@ -15,14 +15,6 @@ angular.module('spriteAnimatorApp')
                 timelineSrv.list.forEach(function (timeline) {
                     if (timeline.sprite === sprite._id) {
                         $rootScope.$broadcast('removeTimeline', timeline);
-
-                        // @TODO Should be performed in the remove timeline logic
-//                        animSrv.list.forEach(function (anim) {
-//                            if (anim.timelines.has(timeline._id)) {
-//                                anim.timelines.erase(timeline._id);
-//                                animSrv.addDirt(anim._id);
-//                            }
-//                        });
                     }
                 });
             },
