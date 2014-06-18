@@ -522,6 +522,15 @@ $highlight-secondary: #e30482;
 frame-context {
   z-index: 21;
   position: absolute;
+  display: block;
+  min-width: 150px;
+  min-height: 150px;
+  top: 100px;
+  left: 100px;
+  background: #fff;
+  resize: both;
+  overflow: hidden;
+  border: 1px solid #ccc;
 
   .modal-drag {
     height: 28px;
@@ -556,21 +565,8 @@ frame-context {
     cursor: pointer;
   }
 
-  .frame-context {
-    display: block;
-    position: absolute;
-    min-width: 200px;
-    min-height: 200px;
-    top: 100px;
-    left: 100px;
-    background: #fff;
-  }
-
   .frame-content {
     padding: 5px;
-    border: 1px solid #ccc;
-    resize: both;
-    overflow: hidden;
   }
 
   button {
