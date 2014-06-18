@@ -8,18 +8,17 @@
     });
 
     angular.module('spriteAnimatorApp')
-        .directive('dragImage', function () {
+        .directive('dragImage', function ($rootScope, timelineSrv, frameSrv) {
             return {
                 restrict: 'A',
                 link: function (scope, el, attrs) {
                     el.mousedown(function (e) {
-                        // @TODO Set clicked timeline as active
-//                        if (this.isSelected(timeline)) {
+                        if (el.hasClass('active')) {
                             drag = true;
                             xCurrent = frameSrv.current.x;
                             yCurrent = frameSrv.current.y;
                             prevPos = { x: e.clientX, y: e.clientY };
-//                        }
+                        }
                     });
                 }
             };
@@ -40,6 +39,8 @@
                         var yChangeScale = Math.floor(yChange / zoomSrv.scale);
                         var yNew = yCurrent - yChangeScale;
                         $rootScope.$broadcast('setFrameCurrent', 'y', yNew);
+
+                        scope.$apply();
                     });
 
                     // All of our cleanup for the private vars should be done here

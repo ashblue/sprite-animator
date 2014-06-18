@@ -1,31 +1,6 @@
 <anim-manager></anim-manager>
 
-<!--<animation-timeline-images-->
-        <!--ng-mousemove="timelinesCtrl.dragImageDuring($event)"-->
-        <!--ng-mouseup="timelinesCtrl.dragImageEnd()"-->
-        <!--class="disable-select animation-stage">-->
-    <!--<div class="animation-stage-container"-->
-         <!--ng-style="timelinesCtrl.getStageStyle()">-->
-        <!--<animation-image class="animation-image"-->
-                         <!--ng-repeat="timelineItem in timelineCtrl.list | orderBy:'zIndex':true"-->
-                         <!--ng-style="timelinesCtrl.getScrubStyle(timelineItem)"-->
-                         <!--ng-class="{ lock: timelineItem.lock, active: timelinesCtrl.isSelected(timelineItem) }"-->
-                         <!--ng-show="timelineItem.show"-->
-                         <!--ng-click="timelinesCtrl.setSelected(timelineItem)"-->
-                         <!--ng-mousedown="timelinesCtrl.dragImageStart($event, timelineItem)"-->
-                         <!--data-id="{{timelineItem._id}}"-->
-                         <!--data-src="{{trustSrc(timelinesCtrl.getImage(timelineItem.sprite))}}"-->
-                         <!--data-sprite="{{timelineItem.sprite}}">-->
-            <!--<span class="animation-image-canvas"></span>-->
-            <!--<animation-image-axis class="animation-image-axis fa fa-crosshairs"></animation-image-axis>-->
-        <!--</animation-image>-->
-
-
-        <!--<div ng-show="timelinesCtrl.isHitBoxVisible()" class="hitbox" ng-style="timelinesCtrl.getHitBox()">-->
-            <!--<span resize-stage class="handle"></span>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</animation-timeline-images>-->
+<stage class="animation-stage" drag-image-area></stage>
 
 <timeline></timeline>
 

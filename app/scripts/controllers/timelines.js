@@ -33,7 +33,13 @@ angular.module('spriteAnimatorApp')
             ctrl.add(sprite);
         });
 
+        $scope.$on('setTimelineFrame', function (e, timeline) {
+            $scope.$emit('setStageSelect', timeline);
+            ctrl.setSelected(timeline);
+        });
+
         $scope.$on('setTimeline', function (e, timeline) {
+            $scope.$emit('setStageSelect', timeline);
             ctrl.selected = timeline._id;
         });
 
@@ -95,6 +101,7 @@ angular.module('spriteAnimatorApp')
             var frame = frameSrv.getFrameIndex(timeline._id, scrubSrv.index);
             $rootScope.$broadcast('setFrame', frame);
             this.selected = timeline._id;
+            $scope.$emit('setStageSelect', timeline);
         };
 
         this.isSelected = function (timeline) {
@@ -169,35 +176,6 @@ angular.module('spriteAnimatorApp')
                 });
             });
         };
-
-        // @TODO All proceeding code is in a directive attribute
-//        var drag = false, prevPos, xCurrent, yCurrent;
-//        this.dragImageStart = function (e, timeline) {
-//            if (this.isSelected(timeline)) {
-//                drag = true;
-//                xCurrent = frameSrv.current.x;
-//                yCurrent = frameSrv.current.y;
-//                prevPos = { x: e.clientX, y: e.clientY };
-//            }
-//        };
-//
-//        this.dragImageDuring = function (e) {
-//            if (!drag) return;
-//
-//            var xChange = prevPos.x - e.clientX;
-//            var xChangeScale = Math.floor(xChange / zoomSrv.scale);
-//            var xNew = xCurrent - xChangeScale;
-//            $scope.$emit('setFrameCurrent', 'x', xNew);
-//
-//            var yChange = prevPos.y - e.clientY;
-//            var yChangeScale = Math.floor(yChange / zoomSrv.scale);
-//            var yNew = yCurrent - yChangeScale;
-//            $scope.$emit('setFrameCurrent', 'y', yNew);
-//        };
-//
-//        this.dragImageEnd = function () {
-//            drag = false;
-//        };
     });
 })();
 

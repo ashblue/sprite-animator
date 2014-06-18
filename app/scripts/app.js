@@ -20,7 +20,8 @@ angular
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/anim.html'
+                templateUrl: 'views/anim.html',
+                controller: 'MainCtrl'
             })
             .when('/load', {
                 templateUrl: 'views/load.html',
