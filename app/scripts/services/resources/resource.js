@@ -6,45 +6,9 @@
         url: null, // Url of REST API capable of handling all = :url, direct = :url/:id
         list: null, // Array of all tracked item
         data: null, // Hash of all tracked item IDs
-        timeout: null, // Tracked timeouts for communicating with the server
         ready: false, // If population has been run so the collection knows its ready for usage and doesn't run populate again
-        slug: null, // ID for looking up collections in collectionList
-        syncDelay: 1000 // Time delay before data is synced with the server
+        slug: null // ID for looking up collections in collectionList
     };
-
-    var _syncTotal = 0;
-    var _syncCount = 0;
-    var _$offline = $('#offline');
-
-    var _private = {
-        beginSync: function () {
-            _syncTotal += 1;
-        },
-
-        endSync: function () {
-            _syncCount += 1;
-        },
-
-        verifySync: function () {
-            if (_syncTotal !== _syncCount) {
-                return 'Warning, if you exit now data will be lost (still saving to server).'
-            }
-        },
-
-        offlineCheck: function () {
-            if (!navigator.online) {
-                _$offline.show();
-            } else {
-                _$offline.hide();
-            }
-        }
-    };
-
-    // Make sure all data posts are resolved
-    if (window.CONFIG.online) window.onbeforeunload = _private.verifySync();
-
-    // Warn user if they go offline
-    if (window.CONFIG.online) window.setInterval(_private.offlineCheck, 1000);
 
     /**
      * @ngdoc service
@@ -80,7 +44,7 @@
                         });
                         if (success) success(this);
                     }).error(function () {
-                        if (error) error(this);
+                        if (error) console.error('Population failed');
                     });
             };
 
@@ -120,7 +84,6 @@
             Resource.prototype.set = function (id, key, value) {
                 var item = this.get(id);
 
-
                 if (typeof key !== 'object') {
                     if (!Array.isArray(item[key])) { // Regular set key
                         item[key] = value;
@@ -157,18 +120,11 @@
                 var item = this.get(id);
 
                 if (window.CONFIG.online) {
-                    _private.beginSync();
-                    if (this.timeout[id]) this.timeout[id].clearTimeout();
+                    if (this.timeout[id]) window.clearTimeout(this.timeout[id]);
                     this.timeout[id] = window.setTimeout(function () {
-                        $http.put(collection.url + '/' + id, item)
-                            .success(function () {
-                                _private.endSync();
-                            })
-                            .error(function () {
-                                _private.endSync();
-                                console.error('Failure to communicate with server to update model, attempting again');
-                                collection.addDirt(id);
-                            });
+                        $http.put(collection.url + '/' + id, item).error(function () {
+                            console.error('Update failed');
+                        });
                     }, this.syncDelay);
                 }
             };
@@ -184,6 +140,8 @@
                     $http.post(this.url).success(function (item) {
                         collection._add(item);
                         if (callback) callback(item);
+                    }).error(function () {
+                        console.error('creation failed', data);
                     });
                 }
 
@@ -191,20 +149,14 @@
             };
 
             Resource.prototype.destroy = function (id) {
-                var collection = this;
                 var item = this.get(id);
                 if (item) this.clean(item);
                 if (item) this._remove(item);
 
                 if (window.CONFIG.online) {
-                    _private.beginSync();
                     $http.delete(this.url.root + '/' + item._id)
-                        .success(function () {
-                            _private.endSync();
-                        })
                         .error(function () {
-                            _private.endSync();
-                            collection.destroy(id);
+                            console.error('Destroy failed');
                         });
                 }
 
