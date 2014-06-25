@@ -1,13 +1,5 @@
 'use strict';
 
-Offline.options = {
-    checks: {
-        image: {
-            url: './favicon.ico'
-        }
-    }
-};
-
 /**
  * @ngdoc overview
  * @name spriteAnimatorApp
