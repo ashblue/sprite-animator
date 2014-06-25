@@ -2,6 +2,7 @@
   "name": "spriteanimator",
   "version": "0.0.0",
   "dependencies": {
+    "grunt-jsbeautifier": "^0.2.7",
     "grunt-karma": "^0.8.3",
     "karma": "^0.12.16"
   },

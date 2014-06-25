@@ -408,6 +408,13 @@ module.exports = function (grunt) {
                 configFile: 'test/karma.conf.js',
                 singleRun: true
             }
+        },
+
+        // The config file is converted into a mess, make it readable again
+        jsbeautifier: {
+            files : ['<%= yeoman.dist %>/scripts/config*'],
+            options : {
+            }
         }
     });
 
@@ -454,7 +461,8 @@ module.exports = function (grunt) {
         'uglify',
         'filerev',
         'usemin',
-        'htmlmin'
+        'htmlmin',
+        'jsbeautifier'
     ]);
 
     grunt.registerTask('default', [
