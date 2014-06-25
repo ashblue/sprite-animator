@@ -9,7 +9,7 @@ angular.module('spriteAnimatorApp')
             if (!sprite.image_id) {
                 imageSrv.create({
                     name: sprite.name + ' image',
-                    src: sprite.image,
+                    path: sprite.image,
                     width: sprite.imageCanvas.canvas.width / zoomSrv.scale,
                     height: sprite.imageCanvas.canvas.height / zoomSrv.scale
                 }, function (item) {

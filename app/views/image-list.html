@@ -7,7 +7,7 @@
     <div class="list-group" ng-repeat="image in imagesCtrl.list | filter:imageSearch | limitTo:20 | reverse">
         <a href="#" class="list-group-item" ng-click="imagesCtrl.showImage($event, image)">
             <span class="pull-left" style="margin-right: 10px">
-                <img class="thumb-constrain" ng-src="{{image.src}}"/>
+                <img class="thumb-constrain" ng-src="{{image.path}}"/>
             </span>
 
             <div class="media-body">

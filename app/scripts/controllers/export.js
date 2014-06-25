@@ -28,7 +28,7 @@
                         if (spriteBlacklist[sprite._id]) return; // Skip all duplicate sprite sheets
                         var image = imageSrv.get(sprite.image);
                         var spriteSheet = window.sa.object.merge({}, sprite, {
-                            image: image.src
+                            image: image.path
                         });
 
                         delete spriteSheet.$$hashKey;

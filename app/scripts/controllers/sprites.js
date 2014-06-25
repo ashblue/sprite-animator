@@ -39,7 +39,7 @@
 
         this.getImageSrc = function (id) {
             var image = imageSrv.get(id);
-            return image ? image.src : '';
+            return image ? image.path : '';
         };
 
         this.remove = function (sprite) {
@@ -75,7 +75,7 @@
 
         $scope.getImageSrc = function (id) {
             var image = imageSrv.get(id);
-            return image ? image.src : '';
+            return image ? image.path : '';
         };
     });
 

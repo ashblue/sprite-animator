@@ -66,7 +66,7 @@
         this.getImage = function (id) {
             var sprite = spriteSrv.get(id);
             var image = imageSrv.get(sprite.image);
-            return image ? image.src : '';
+            return image ? image.path : '';
         };
 
         this.getHitBox = function () {

@@ -23,7 +23,7 @@ angular.module('spriteAnimatorApp')
         });
 
         $scope.$on('setUploadImage', function (e, image) {
-            ctrl.setImage(image.src, true, image._id);
+            ctrl.setImage(image.path, true, image._id);
         });
 
         $scope.$on('clearUploadImage', function (e, image) {

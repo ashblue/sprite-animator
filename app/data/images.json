@@ -4,34 +4,34 @@
         "_id": "single-image1",
         "width": 11,
         "height": 16,
-        "src": "images/barrel.png"
+        "path": "images/barrel.png"
     },
     {
         "name": "Coal Image",
         "_id": "coal-image",
         "width": 240,
         "height": 138,
-        "src": "images/coal.png"
+        "path": "images/coal.png"
     },
     {
         "name": "Single Frame Image",
         "_id": "single-image3",
         "width": 11,
         "height": 16,
-        "src": "images/barrel.png"
+        "path": "images/barrel.png"
     },
     {
         "name": "Single Frame Image",
         "_id": "single-image4",
         "width": 11,
         "height": 16,
-        "src": "images/barrel.png"
+        "path": "images/barrel.png"
     },
     {
         "name": "Lorem Ipsum",
         "_id": "single-image5",
         "width": 11,
         "height": 16,
-        "src": "images/barrel.png"
+        "path": "images/barrel.png"
     }
 ]
