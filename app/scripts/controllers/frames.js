@@ -110,7 +110,15 @@
         var guiDetails = gui.addFolder('Details');
 
         // Hack to make property changes save on changed models
-        _event.addDirt = function () {
+        _event.addDirt = function (val) {
+            // In-case of isNaN corruption on a negative (damned DAT Gui) force the corrupted value to 0
+            if (typeof val === 'number' && isNaN(val)) {
+                for (var key in this) {
+                    var target = this[key];
+                    if (typeof target === 'number' && isNaN(target)) this[key] = 0;
+                }
+            }
+
             frameSrv.addDirt(this._id);
             $scope.$apply();
         };
