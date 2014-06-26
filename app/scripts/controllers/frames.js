@@ -43,7 +43,7 @@
 
             frameSrv.create(frame, function (item) {
                 disabled = false;
-                timeline.frames.push(item._id);
+                timelineSrv.set(item.timeline, 'frames', item._id);
                 ctrl.setFrame(item);
             });
         };
@@ -75,8 +75,7 @@
 
         // Destory a key frame
         this.remove = function (frame) {
-            var timeline = timelineSrv.get(frame.timeline);
-            timeline.frames.erase(frame._id);
+            timelineSrv.unset(frame.timeline, 'frames', frame._id);
             if (this.isActive(frame)) frameSrv.current = null;
             $scope.$emit('clearFrame');
             frameSrv.destroy(frame);
@@ -272,10 +271,10 @@
 
         this.remove = function () {
             var frame = this.current;
-            var timeline = timelineSrv.get(frame.timeline);
-            timeline.frames.erase(frame._id);
             $scope.$emit('clearFrame', frame);
             $scope.$emit('removeFrame', frame);
+            $scope.$broadcast('clearFrame', frame);
+            $scope.$broadcast('removeFrame', frame);
         };
     });
 

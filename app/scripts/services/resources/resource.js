@@ -7,7 +7,9 @@
         list: null, // Array of all tracked item
         data: null, // Hash of all tracked item IDs
         ready: false, // If population has been run so the collection knows its ready for usage and doesn't run populate again
-        slug: null // ID for looking up collections in collectionList
+        slug: null, // ID for looking up collections in collectionList
+        syncDelay: 300,
+        _id: 0
     };
 
     /**
@@ -120,9 +122,9 @@
                 var item = this.get(id);
 
                 if (window.CONFIG.online) {
-                    if (this.timeout[id]) window.clearTimeout(this.timeout[id]);
-                    this.timeout[id] = window.setTimeout(function () {
-                        $http.put(collection.url + '/' + id, item).error(function () {
+                    if (this.timeout[item._id]) window.clearTimeout(this.timeout[item._id]);
+                    this.timeout[item._id] = window.setTimeout(function () {
+                        $http.put(collection.url + '/' + item._id, item).error(function () {
                             console.error('Update failed');
                         });
                     }, this.syncDelay);
@@ -137,7 +139,7 @@
                     collection._add(data);
                     if (callback) callback(data);
                 } else {
-                    $http.post(this.url).success(function (item) {
+                    $http.post(this.url, data).success(function (item) {
                         collection._add(item);
                         if (callback) callback(item);
                     }).error(function () {
@@ -154,7 +156,7 @@
                 if (item) this._remove(item);
 
                 if (window.CONFIG.online) {
-                    $http.delete(this.url.root + '/' + item._id)
+                    $http.delete(this.url + '/' + item._id)
                         .error(function () {
                             console.error('Destroy failed');
                         });

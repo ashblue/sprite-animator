@@ -16,7 +16,7 @@ angular.module('spriteAnimatorApp')
                 // Remove all animation references
                 animSrv.list.forEach(function (anim) {
                     if (anim.timelines.has(timeline._id)) {
-                        anim.timelines.erase(timeline._id);
+                        animSrv.unset(anim._id, 'timelines', timeline._id);
                     }
                 });
 

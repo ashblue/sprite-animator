@@ -12,17 +12,19 @@
             if (!upload.sprite_id) {
                 spriteSrv.create({
                     name: upload.name,
-                    image: upload.image,
+                    image: upload.image_id,
                     width: upload.imageCanvas.canvas.width / zoomSrv.scale / upload.cols,
                     height: upload.imageCanvas.canvas.height / zoomSrv.scale / upload.rows
                 });
             } else {
                 spriteSrv.set(upload.sprite_id, {
-                    image: upload.image,
+                    image: upload.image_id,
                     width: upload.imageCanvas.canvas.width / zoomSrv.scale / upload.cols,
                     height: upload.imageCanvas.canvas.height / zoomSrv.scale / upload.rows
                 });
             }
+
+            $scope.$emit('clearUpload');
         });
 
         $scope.$on('removeSprite', function (e, sprite) {

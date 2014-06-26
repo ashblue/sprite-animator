@@ -13,11 +13,10 @@ angular.module('spriteAnimatorApp')
                     width: sprite.imageCanvas.canvas.width / zoomSrv.scale,
                     height: sprite.imageCanvas.canvas.height / zoomSrv.scale
                 }, function (item) {
-                    sprite.image = item._id;
+                    sprite.image_id = item._id;
                     $scope.$emit('createSprite', sprite);
                 });
             } else {
-                sprite.image = sprite.image_id;
                 $scope.$emit('createSprite', sprite);
             }
         });

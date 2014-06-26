@@ -34,6 +34,10 @@ angular.module('spriteAnimatorApp')
             if (sprite._id === ctrl.upload.sprite_id) ctrl.removeSprite();
         });
 
+        $scope.$on('clearUpload', function (e, sprite) {
+            ctrl.clear();
+        });
+
         this.upload = {
             image: DEFAULT_IMAGE,
             imageCanvas: null,
@@ -51,6 +55,9 @@ angular.module('spriteAnimatorApp')
 
         this.addUpload = function (sprite) {
             $scope.$emit('parseUpload', sprite);
+        };
+
+        this.clear = function () {
             this.clearImage();
             this.removeSprite();
             this.upload.name = null;

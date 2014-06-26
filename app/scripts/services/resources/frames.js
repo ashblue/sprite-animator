@@ -6,6 +6,7 @@ angular.module('spriteAnimatorApp')
             current: null,
 
             clean: function (frame) {
+                // @TODO Why is this commented out?
 //                spriteSrv.list.forEach(function (sprite) {
 //                    if (sprite.image === image._id) {
 //                        $rootScope.$broadcast('removeSprite', sprite);
